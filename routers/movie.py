@@ -1,11 +1,11 @@
 """Routes for movie endpoints."""
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from core.settings import load_env
 import httpx
 
 tmdb_key = load_env.TMDB_API_KEY
 movie_router = APIRouter(prefix='/movie', tags=['movie'])
-@movie_router.get('/search')
+@movie_router.get('/search', status_code=200)
 async def search_movie(query: str, page:int = 1) -> dict:
     """
     An endpoint that uses key words to search for movies.
@@ -13,9 +13,12 @@ async def search_movie(query: str, page:int = 1) -> dict:
     """
     
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"https://api.themoviedb.org/3/search/movie?api_key={tmdb_key}&query={query}&page={page}"
-        )
+        base_url = 'https://api.themoviedb.org/3/search/movie'
+        query_parameter = f'?api_key={tmdb_key}&query={query}&page={page}'
+        response = await client.get(f'{base_url}{query_parameter}')
         payload = response.json()
+        if len(payload['results']) == 0:
+            raise HTTPException(status_code=404, detail='No match found!!')
         #  sort search items based on popularity
         payload['results'].sort(key=lambda search_item:search_item['popularity'], reverse=True)
         return payload

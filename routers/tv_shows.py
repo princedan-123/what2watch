@@ -1,17 +1,19 @@
 """Router for tv shows."""
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from core.settings import load_env
 import httpx
 
 tv_show_router = APIRouter(prefix='/tvshow', tags=['tvshows'])
-@tv_show_router.get('/search')
+@tv_show_router.get('/search', status_code=200)
 async def search_tvshow(query: str, page:int = 1):
     tmdb_key = load_env.TMDB_API_KEY
-    print(tmdb_key)
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"https://api.themoviedb.org/3/search/tv?api_key={tmdb_key}&query={query}&page={page}"
-        )
+        base_url = 'https://api.themoviedb.org/3/search/tv'
+        query_parameter = f'?api_key={tmdb_key}&query={query}&page={page}'
+        response = await client.get(f'{base_url}{query_parameter}')
         payload = response.json()
+        if len(payload['results']) == 0:
+            raise HTTPException(status_code=404, detail='No match found!!')
         #  sort search items based on popularity
         payload['results'].sort(key=lambda search_item:search_item['popularity'], reverse=True)
         return payload
