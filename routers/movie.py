@@ -29,4 +29,32 @@ async def get_movie(movie_id:int):
     async with httpx.AsyncClient() as client:
         base_url = 'https://api.themoviedb.org/3/movie/'
         response = await client.get(f'{base_url}{movie_id}?api_key={tmdb_key}')
+        if not response.json():
+            raise HTTPException(
+                status_code=500, detail='Oops an error occured!!'
+                )
         return response.json()
+
+@movie_router.get('/clips/{movie_id}')
+async def clips(movie_id:int):
+    """An endpoint that returns information about a movie video clips."""
+    async with httpx.AsyncClient() as client:
+        base_url = f'https://api.themoviedb.org/3/movie/{movie_id}/videos'
+        query_parameter = f'?api_key={tmdb_key}'
+        response = await client.get(f'{base_url}{query_parameter}')
+        response = response.json()['results']
+        filtered_response = [
+            item for item in response if item['official'] and item['site'] == 'YouTube'
+            ]
+        #  Generate youtuble links for videos
+        videos = [
+            {
+                'name': video['name'],
+                'type': video['type'],
+                'published_at': video['published_at'],
+                'language': video['iso_639_1'],
+                'country': video['iso_3166_1'],
+                'link': f'https://www.youtube.com/watch?v={video['key']}'
+            } for video in filtered_response
+            ]
+        return videos
