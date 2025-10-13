@@ -54,3 +54,16 @@ async def clips(tv_id:int):
             } for video in filtered_response
             ]
         return videos
+
+@tv_show_router.get('/shows_like/{tv_id}', status_code=200)
+async def shows_like(tv_id:int, page:int =1):
+    """An endpoint that recommends tv shows like the current show."""
+    base_url = f'https://api.themoviedb.org/3/tv/{tv_id}/recommendations'
+    query_parameter = f'?api_key={tmdb_key}&page={page}'
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f'{base_url}{query_parameter}')
+        if not response.json().get('results'):
+            raise HTTPException(
+                status_code=500, detail='Invalid id: The pre-requisite id is invalid or not found.'
+                )
+        return response.json()
