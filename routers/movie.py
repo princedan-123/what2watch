@@ -72,3 +72,16 @@ async def movies_like(movie_id:int, page:int =1):
                 status_code=500, detail='Invalid id: The pre-requisite id is invalid or not found.'
                 )
         return response.json()
+
+@movie_router.get('/cast_and_crew/{movie_id}', status_code=200)
+async def cast_and_crew(movie_id:int):
+    """An endpoint that returns cast and crew of a movie."""
+    base_url = f'https://api.themoviedb.org/3/movie/{movie_id}/credits'
+    query_parameter = f'?api_key={tmdb_key}'
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f'{base_url}{query_parameter}')
+        if not response.json().get('cast'):
+            raise HTTPException(
+                status_code=500, detail='Invalid id: The pre-requisite id is invalid or not found.'
+                )
+        return response.json()
