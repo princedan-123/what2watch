@@ -96,3 +96,16 @@ async def popular_movies(page:int =1):
         if not response.json().get('results'):
             raise HTTPException(status_code=500, detail='server error')
         return response.json()
+
+@movie_router.get('/trending/{duration}', status_code=200)
+async def popular_movies(duration:str = 'day', page:int = 1):
+    """An endpoints that returns a list of trending movies."""
+    if duration not in ['week', 'day']:
+        raise HTTPException(status_code=400, detail='Invalid trend duration')
+    base_url = f'https://api.themoviedb.org/3/trending/movie/{duration}'
+    query_parameter = f'?api_key={tmdb_key}&page={page}'
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f'{base_url}{query_parameter}')
+        if not response.json().get('results'):
+            raise HTTPException(status_code=500, detail='server error')
+        return response.json()
