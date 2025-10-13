@@ -91,3 +91,16 @@ async def popular_tvshows(page:int =1):
         if not response.json().get('results'):
             raise HTTPException(status_code=500, detail='server error')
         return response.json()
+
+@tv_show_router.get('/airing_today/', status_code=200)
+async def airing_today(page:int = 1):
+    """
+        An endpoint that returns a list of tv shows airing today
+    """
+    base_url = f'https://api.themoviedb.org/3/tv/airing_today'
+    query_parameter = f'?api_key={tmdb_key}&page={page}'
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f'{base_url}{query_parameter}')
+        if not response.json().get('results'):
+            raise HTTPException(status_code=500, detail='server error')
+        return response.json()
