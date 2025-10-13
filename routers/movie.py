@@ -98,7 +98,7 @@ async def popular_movies(page:int =1):
         return response.json()
 
 @movie_router.get('/trending/{duration}', status_code=200)
-async def popular_movies(duration:str = 'day', page:int = 1):
+async def trending_movies(duration:str = 'day', page:int = 1):
     """An endpoints that returns a list of trending movies."""
     if duration not in ['week', 'day']:
         raise HTTPException(status_code=400, detail='Invalid trend duration')
