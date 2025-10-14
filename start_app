@@ -1,0 +1,4 @@
+#!/bin/env bash
+
+# A script that starts the app server
+uvicorn app.main:app --reload
