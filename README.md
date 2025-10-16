@@ -11,7 +11,9 @@ A FastAPI-based backend service that provides movie and TV show recommendations,
 ✅ Search for movies, TV shows.
 ✅ Built with FastAPI and async HTTP requests using httpx for high performance
 
-### pip install -r requirements.txt
+### Install requirements
+
+pip install -r requirements.txt
 
 ### Access the API Docs
 
@@ -19,4 +21,4 @@ Once running, visit:
 
 [Swagger UI →](https://what2watch-1gh0.onrender.com/docs)
 
-[ReDoc →] (https://what2watch-1gh0.onrender.com/redoc)
+[ReDoc →](https://what2watch-1gh0.onrender.com/redoc)
