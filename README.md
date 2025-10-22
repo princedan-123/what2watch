@@ -15,6 +15,18 @@ A FastAPI-based backend service that provides movie and TV show recommendations,
 
 pip install -r requirements.txt
 
+## Pull Docker image from docker hub
+
+```
+sudo docker pull danmab/what2watch:v1
+```
+
+## Run docker container
+
+```
+sudo docker run -it danmab/what2watch:v1 sh
+```
+
 ### Access the API Docs
 
 Once running, visit:
@@ -22,3 +34,7 @@ Once running, visit:
 [Swagger UI →](https://what2watch-1gh0.onrender.com/docs)
 
 [ReDoc →](https://what2watch-1gh0.onrender.com/redoc)
+
+```
+
+```
