@@ -25,6 +25,9 @@ sudo docker pull danmab/what2watch:v1
 
 ```
 sudo docker run -it danmab/what2watch:v1 sh
+touch .env
+echo 'TMDB_API_KEY=API_KEY' > .env
+./start_app
 ```
 
 ### Access the API Docs
