@@ -50,7 +50,7 @@ async def clips(tv_id:int):
                 'language': video['iso_639_1'],
                 'country': video['iso_3166_1'],
                 'official': video['official'],
-                'link': f'https://www.youtube.com/watch?v={video['key']}'
+                'link': f'https://www.youtube.com/embed/{video['key']}'
             } for video in filtered_response
             ]
         return videos
