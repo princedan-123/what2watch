@@ -8,7 +8,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://what2watchcom.vercel.app",
+        "https://what2watchcom.vercel.app",
     ],
     allow_methods=["*"],
     allow_headers=["*"],
