@@ -6,8 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 origins = [
-    "http://localhost:3000",              # local React / Vite / Next dev
-    "http://127.0.0.1:3000",
+    "http://localhost:5173",              # local React / Vite / Next dev
+    "http://127.0.0.1:5173",
     "https://what2watch-sandy.vercel.app", # your Vercel frontend
     "https://what2watch-sandy.vercel.app/movies/trending-movies",
 ]
