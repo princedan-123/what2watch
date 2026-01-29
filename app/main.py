@@ -9,7 +9,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://what2watch-sandy.vercel.app/",
-        "http://localhost:5173/"
+        "http://localhost:5173/",
+        "*"
     ],
     allow_methods=["*"],
     allow_headers=["*"],
