@@ -9,6 +9,7 @@ origins = [
     "http://localhost:3000",              # local React / Vite / Next dev
     "http://127.0.0.1:3000",
     "https://what2watch-sandy.vercel.app", # your Vercel frontend
+    "https://what2watch-sandy.vercel.app/movies/trending-movies",
 ]
 app.add_middleware(
     CORSMiddleware,
